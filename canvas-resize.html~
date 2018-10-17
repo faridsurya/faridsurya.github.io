@@ -1,0 +1,90 @@
+<!DOCTYPE html>    
+<head>
+    <meta charset="utf-8">
+    <title>Resize HTML5 canvas dynamically | www.htmlcheats.com</title>
+	<style>
+		html, body {
+			width: 100%;
+			height: 100%;
+			margin: 0px;
+			border: 0;
+			overflow: hidden; /*  Disable scrollbars */
+			display: block;  /* No floating content on sides */
+			
+		}
+		#c{
+			background-color:#ccc;
+		}
+	</style>
+</head>
+
+<body>
+
+	<canvas id='c' style = 'position: absolute; left: 0px; top: 0px;' >
+	</canvas>
+	
+	<script>
+		(function() {
+			var 
+			htmlCanvas = document.getElementById('c'),
+			ctx = htmlCanvas.getContext('2d');
+			initialize();
+
+			function initialize() {
+				window.addEventListener('resize', resizeCanvas, false);
+				
+				resizeCanvas();
+			}
+				
+			function redraw() {
+				ctx.strokeStyle = 'blue';
+				ctx.lineWidth = '5';
+				ctx.strokeRect(0, 0, window.innerWidth, window.innerHeight);
+				var cl=Math.floor((Math.random() * 10)+2 );
+				var rw=Math.floor((Math.random() * 10) +2);				
+				drawGrid(cl,rw);
+				//drawRect(200,200,100,100);
+			}
+		
+			function resizeCanvas() {
+				htmlCanvas.width = window.innerWidth;
+				htmlCanvas.height = window.innerHeight;
+				redraw();				
+			}
+
+			function drawCircle(){				
+				ctx.beginPath();				
+				ctx.beginPath();
+				ctx.rect(htmlCanvas.width/2,100,100,100);
+				ctx.fillStyle = 'yellow';
+				ctx.fill();      		
+			}
+			function drawGrid(col,row) {
+				var 
+				rh=window.innerHeight/row,
+				rw=window.innerWidth/col,
+				gap=0;				
+				for (var i=0; i<col;i++) {
+					var rx=i*rw;
+					for (var j=0; j<row; j++) {
+						var ry=j*rh;
+						drawRect(rx,ry,rw-gap,rh-gap);
+					}							
+				}
+			}
+			function drawRect(w,h,x,y) {
+				var clrs=['#f6e4fb','#e6bcf5','#d68ef0','#c55dea','#b82ee6','#4ad426','#00aa09'];
+				var clr=Math.floor((Math.random() * 10) );
+				console.log(clr);
+				ctx.beginPath();				
+				ctx.rect(w,h,x,y);
+				ctx.fillStyle = clrs[clr];
+				ctx.fill();
+			}
+		
+		})();
+	</script>
+	
+</body>
+
+</html>

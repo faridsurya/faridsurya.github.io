@@ -1,0 +1,72 @@
+<!DOCTYPE html>    
+<head>
+    <meta charset="utf-8">
+    <title>Resize HTML5 canvas dynamically | www.htmlcheats.com</title>
+	<style>
+		html, body {
+			width: 100%;
+			height: 100%;
+			margin: 0px;
+			border: 0;
+			overflow: hidden; /*  Disable scrollbars */
+			display: block;  /* No floating content on sides */
+			
+		}
+		#c{
+			background-color:#ccc;
+		}
+	</style>
+</head>
+
+<body>
+
+	<canvas id='layer1' ></canvas>
+	
+	
+	<script>
+		(function() {
+			var 
+			htmlCanvas = document.getElementById('layer1'),
+			ctx = htmlCanvas.getContext('2d');
+			initialize();
+
+			function initialize() {
+				window.addEventListener('resize', resizeCanvas, false);				
+				resizeCanvas();
+			}
+				
+				
+			function resizeCanvas() {
+				htmlCanvas.width = window.innerWidth;
+				htmlCanvas.height = window.innerHeight;
+				
+				//menu1
+					
+				redraw(0,0,htmlCanvas.width/4,htmlCanvas.height,'#ECEFF1');
+				createText();	
+				
+				
+				//menu2
+				redraw(htmlCanvas.width/4,0,htmlCanvas.width/4,htmlCanvas.height,'#CFD8DC');
+				redraw(htmlCanvas.width/2,0,htmlCanvas.width/4,htmlCanvas.height,'#B0BEC5');
+				redraw(htmlCanvas.width*3/4,0,htmlCanvas.width/4,htmlCanvas.height,'#90A4AE');
+			}
+
+			function redraw(posX,posY,w,h,clr){							
+		      ctx.beginPath();
+		      ctx.rect(posX, posY, w, h);		    
+				ctx.fillStyle = clr;
+		      ctx.fill();		     	
+			}
+			
+			function createText() {
+				ctx.font="20px Georgia";
+				ctx.fillText("Hello World!",10,50);
+			}
+		
+		})();
+	</script>
+	
+</body>
+
+</html>

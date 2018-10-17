@@ -1,0 +1,144 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<title>Canvas Layers Test</title>
+</head>
+
+<!-- 
+Step 1:
+Setting layer menggunakan CSS. Pengaturan ini akan membuat posisi canvas seperti layer yang bertumpuk.
+z-index paling rendah menunjukkan posisi layer berada paling belakang.
+ -->
+
+<style type="text/css">
+body{
+	position: relative;
+	margin: 0px;
+}
+#layer1{
+	z-index: 1;
+	position: absolute;
+	width: 100%;
+	
+}
+#layer2{
+	z-index: 3;
+	position: absolute;	
+	width: 100%;	
+}
+
+#layer3{
+	z-index: 2;
+	position: absolute;	
+	width: 100%;	
+}
+
+
+</style>
+<body onresize="init()">
+
+<canvas id="layer1"></canvas>
+<canvas id="layer2"></canvas>
+<canvas id="layer3"></canvas>
+
+<script type="text/javascript" >
+
+//definisikan variabel
+
+var 
+layer1, layer2, layer3,
+ctx1, ctx2, ctx3, screenW, screenH;
+
+
+//fungsi inisial
+
+function init() {
+	layer1=document.getElementById('layer1');
+	layer2=document.getElementById('layer2');
+	layer3=document.getElementById('layer3');
+	ctx1=layer1.getContext('2d');
+	ctx2=layer2.getContext('2d');
+	ctx3=layer3.getContext('2d');
+	
+	//screen size
+	screenW=window.innerWidth;
+	screenH=window.innerHeight;
+		
+	//set fullscreen canvas
+	layer1.width=screenW;
+	layer1.height=screenH;
+	
+	layer2.width=screenW;
+	layer2.height=screenH;
+	
+	layer3.width=screenW;
+	layer3.height=screenH;
+	
+	
+	
+	//draw layer 1
+	draw1();
+	
+	//draw layer 2
+	draw2();
+	
+	//draw layer 3
+	draw3(3);
+	
+	
+}
+
+function draw1() {
+	drawRect(0,0,screenW/4,screenH,'#f3ebe9'); 
+	drawRect(screenW/4,0,screenW/4,screenH,'#ddcdca'); 
+	drawRect(screenW/2,0,screenW/4,screenH,'#c3aca9'); 
+	drawRect(screenW*3/4,0,screenW/4,screenH,'#aa8a86'); 
+}
+
+function draw2() {
+	drawText('#DARETODREAM',screenW/2,screenH/2,'38px Arial','white','center');
+ 
+	
+	
+}
+
+function draw3(rad) {
+	ctx3.clearRect(0,0,screenW,screenH);
+	
+	
+	ctx3.beginPath();
+	ctx3.arc(screenW/2,screenH/2,screenH/rad,0,2*Math.PI);
+	ctx3.fillStyle = '#563636';
+	ctx3.fill();  
+	
+}
+
+function drawRect(x,y,w,h,clr) {
+	ctx1.beginPath();
+	ctx1.rect(x,y,w,h);
+	ctx1.fillStyle = clr;
+	ctx1.fill(); 
+}
+
+function drawText(txt,x,y,style,clr,align) {
+	ctx2.font = style;
+	ctx2.fillStyle = clr;
+	ctx2.textAlign = align;
+	ctx2.fillText(txt,x,y);
+
+}
+
+window.onResize=function () {
+	console.log('resizing');
+}
+
+init();
+
+
+
+</script>
+
+
+</body>
+</html>
